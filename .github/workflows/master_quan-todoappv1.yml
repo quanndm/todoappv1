@@ -26,14 +26,17 @@ jobs:
           npm install
           npm run build --if-present
           npm run test --if-present
-          
+      
+      - shell: |
+          Rename-Item ./dist ./build
+          displayName: Rename Target Folder
       # Zip the build directory
       - name: Zip Release
         uses: TheDoctor0/zip-release@0.7.1
         with:
           type: 'zip'
           filename: release.zip
-          path: ./dist/*
+          path: ./build/*
       
       
       - name: Upload artifact for deployment job
@@ -64,5 +67,3 @@ jobs:
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_4F55B717CD214BEEBC809E87FB13CEC0 }}
           package: release.zip
 
-      - name: show folder tree
-        run : ls
