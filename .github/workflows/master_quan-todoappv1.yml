@@ -61,4 +61,4 @@ jobs:
           app-name: 'quan-todoappv1'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_4F55B717CD214BEEBC809E87FB13CEC0 }}
-          package: .
+          package: release.zip
