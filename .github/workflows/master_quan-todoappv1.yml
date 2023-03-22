@@ -33,7 +33,8 @@ jobs:
         with:
           type: 'zip'
           filename: release.zip
-          path: ./dist/
+          directory: ./dist/
+          path: ./
       
       
       - name: Upload artifact for deployment job
