@@ -1,0 +1,377 @@
+@import "./variables";
+@import "./_modal.scss";
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100%;
+    height: 100vh;
+    
+}
+
+
+
+.icon-day-night {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 10px 0 0;
+
+    .day {
+        font-size: 25px;
+        cursor: pointer;
+    }
+
+    .night {
+        display: none;
+        font-size: 25px;
+        cursor: pointer;
+    }
+}
+
+section.title {
+    h1 {
+        color: $color-title;
+        font-weight: bold;
+        text-align: center;
+        font-size: 40px;
+        text-transform: uppercase;
+        font-family: 'Courier New', Courier, monospace;
+    }
+}
+.App{
+    width: 100% !important;
+    height: 100vh !important;
+    background: $color-background-light;
+    transition: all .5s ease;
+    position: relative;
+}
+section.main-layout {
+    margin: 40px 0 0 0;
+    padding: 0;
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    .side {
+        color: initial;
+        width: 15%;
+        height: 100%;
+
+        .category {
+            width: 100%;
+            height: 100%;
+            background-color: $color-main;
+            border-radius: 15px;
+            box-shadow: 0 6px 5px $color-sub;
+            transition: all .5s ease;
+
+            .title {
+                color: #fff;
+                text-align: center;
+                padding-top: 40px;
+                // position: relative;
+
+                // &::after {
+                //     content: "";
+                //     width: 20%;
+                //     height: 2px;
+                //     background-color: #fff;
+                //     position: relative;
+                //     bottom: 13px;
+                //     right: 15px;
+                //     z-index: 1;
+                // }
+
+                // &::before {
+                //     content: "";
+                //     width: 20%;
+                //     height: 2px;
+                //     background-color: #fff;
+                //     position: relative;
+                //     bottom: 13px;
+                //     left: 15px;
+                //     z-index: 1;
+                // }
+            }
+
+            .category-list {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                padding-top: 50px;
+
+                button {
+                    width: 75%;
+                    border: none;
+                    border-radius: 15px;
+                    background: none;
+                    font-size: 20px;
+                    padding: 10px;
+                    color: #fff;
+                    cursor: pointer;
+
+                    &.btn-urgen {
+                        background-color: $color-Urgen;
+                    }
+
+                    &.btn-delegate {
+                        background-color: $color-Delegate;
+                    }
+
+                    &.btn-schedule {
+                        background-color: $color-Schedule;
+                    }
+
+                    &.btn-lately {
+                        background-color: $color-Lately;
+                    }
+                }
+
+            }
+        }
+    }
+
+    .content-wrapper {
+        width: 40%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        .header {
+            border-radius: 15px;
+            padding: 12px 10px;
+            color: $color-sub;
+            background-color: $color-main;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 6px 5px $color-sub;
+            transition: all .5s ease;
+            p.total {
+                font-size: 20px;
+                font-weight: bold;
+            }
+
+            .main-function-1 {
+                width: 60%;
+                display: flex;
+                justify-content: space-between;
+
+                button {
+                    background: none;
+                    border: none;
+                    font-weight: bold;
+                    font-size: 20px;
+                    cursor: pointer;
+                }
+
+                button.clear-task {
+                    color: $color-sub;
+                }
+
+                button.add-task {
+                    color: #fff;
+                    background-color: $color-sub;
+                    padding: 5px 12px;
+                    border-radius: 10px;
+                }
+            }
+        }
+
+        .content {
+            box-shadow: 0 6px 5px $color-sub;
+            border-radius: 15px;
+            width: 100%;
+            height: 100%;
+            background-color: $color-main;
+            transition: all .5s ease;
+            .todolist {
+                height: 100%;
+
+                .list {
+                    height: 90%;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    overflow-y: hidden;
+
+                    .content-wrapper {
+                        padding: 0 10px;
+                        display: flex;
+                        flex-direction: row;
+                        height: 20%;
+                        width: 100%;
+                        gap: 10px;
+                        align-items: center;
+                        justify-content: space-between;
+                        border-bottom: 1px solid #fff;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+
+                        p.content-todo {
+
+                            font-size: 22px;
+                            letter-spacing: 0.5px;
+                            color: #fff;
+                            text-align: left;
+                        }
+
+                        .custom-checkbox {
+                            width: 25px;
+                            height: 25px;
+                            cursor: pointer;
+                            display: block;
+
+                            .check-mark {
+                                width: 100%;
+                                height: 100%;
+
+                                // border: 1px solid #fff;
+                                display: inline-block;
+
+                                border-radius: 50%;
+                                background: url("https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/White_check.svg/1200px-White_check.svg.png ") center/1250% no-repeat;
+                                transition: all .2s ease;
+                                background-color: #4caf50;
+                            }
+
+                            input {
+                                display: none;
+
+                                &:checked+.check-mark {
+                                    background-size: 60%;
+                                    transition: all .2s ease;
+
+                                }
+                            }
+                        }
+
+                    }
+                }
+
+                .list.show-scroll {
+                    overflow-y: scroll;
+                }
+
+                .footer {
+                    height: 10%;
+                    display: flex;
+                    padding: 10px 0;
+                    justify-content: center;
+
+                    button {
+                        padding: 0 15px;
+                        background: none;
+                        border: none;
+                        font-size: 18px;
+                        color: $color-sub;
+                        font-weight: bold;
+                        cursor: pointer;
+                    }
+
+                    button.active {
+                        color: white;
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+.tag-lately {
+    color: #fff;
+    background: $color-Lately;
+    margin-right: 8px;
+    padding: 10px 30px;
+    border: none;
+    border-radius: 15px;
+    letter-spacing: 1px;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.tag-delegate {
+    color: #fff;
+    background: $color-Delegate;
+    margin-right: 8px;
+    padding: 10px 30px;
+    border: none;
+    border-radius: 15px;
+    letter-spacing: 1px;
+    font-size: 18px;
+    font-weight: 500;
+
+}
+
+.tag-urgen {
+    color: #fff;
+    background: $color-Urgen;
+    margin-right: 8px;
+    padding: 10px 30px;
+    border: none;
+    border-radius: 15px;
+    letter-spacing: 1px;
+    font-size: 18px;
+    font-weight: 500;
+
+}
+
+.tag-schedule {
+    color: #fff;
+    background: $color-Schedule;
+    margin-right: 8px;
+    padding: 10px 30px;
+    border: none;
+    border-radius: 15px;
+    letter-spacing: 1px;
+    font-size: 18px;
+    font-weight: 500;
+
+}
+
+.night-active {
+    background: $color-background-dark;
+    transition: all .5s ease;
+
+    .night {
+        display: initial;
+    }
+
+    .day {
+        display: none;
+    }
+
+    .side {
+        .category {
+            background-color: $color-main-dark !important;
+            box-shadow: 0 4px 0 $color-main !important;
+            // transition: all .5s ease;
+
+        }
+    }
+
+    .content-wrapper {
+
+        .header,
+        .content {
+            background-color: $color-main-dark !important;
+            box-shadow: 0 4px 0 $color-main !important;
+            // transition: all .5s ease;
+
+        }
+
+    }
+    .modal-container{
+        background-color: $color-main-dark !important;
+    }
+}
