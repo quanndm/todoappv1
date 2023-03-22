@@ -33,8 +33,7 @@ jobs:
         with:
           type: 'zip'
           filename: release.zip
-          directory: ./dist/
-          path: ./
+          path: ./dist/*
       
       
       - name: Upload artifact for deployment job
@@ -64,3 +63,5 @@ jobs:
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_4F55B717CD214BEEBC809E87FB13CEC0 }}
           package: release.zip
+      - name: Copy files from foo to bar
+        run : mv /home/site/wwwroot/dist/* /home/site/wwwroot
