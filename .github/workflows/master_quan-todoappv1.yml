@@ -31,8 +31,9 @@ jobs:
       - name: Zip Release
         uses: TheDoctor0/zip-release@0.7.1
         with:
+          type: 'zip'
           filename: release.zip
-          path: ./dist/*
+          path: ./dist
       
       
       - name: Upload artifact for deployment job
