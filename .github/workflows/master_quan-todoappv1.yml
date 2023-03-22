@@ -64,3 +64,5 @@ jobs:
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_4F55B717CD214BEEBC809E87FB13CEC0 }}
           package: release.zip
 
+      - name: show folder tree
+        run : ls
