@@ -27,10 +27,7 @@ jobs:
           npm run build --if-present
           npm run test --if-present
           
-      - name : rename folder dist to build
-        shell: |
-          Rename-Item ./dist ./build
-          displayName: Rename Target Folder
+
       # Zip the build directory
       - name: Zip Release
         uses: TheDoctor0/zip-release@0.7.1
