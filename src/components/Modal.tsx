@@ -1,41 +1,54 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import { CategoryEnum, ModalProps, modalType, Todo, TodoStatus } from '../types/type'
-import type { RootState } from '../store/store'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
+import { CategoryEnum, ModalProps, modalType, Todo } from '../types/type'
+import { RootState } from '../store/store'
 import { useSelector, useDispatch } from 'react-redux'
-import { close_modal } from "../store/modal/ModalSlice";
+import { close_modal, detail_task } from "../store/modal/ModalSlice";
 import { v4 as uuidv4 } from 'uuid';
-import { add_todo } from '../store/todo/Todoslice';
+import { addTodoAsync, add_todo, updateTodoAsync } from '../store/todo/Todoslice';
 import { get_detail } from '../store/todo/helper';
-const Modal = (props: ModalProps) => {
-    const { open, type } = useSelector((state: RootState) => state.Modal);
-    const Todo_array = useSelector((state: RootState) => state.Todo)
-    const dispatch = useDispatch();
+import { Optional } from 'utility-types';
+import { AnyAction } from 'redux';
+import { useAppDispatch } from '../store/hook';
+const Modal = () => {
+    const { open, type, id: Todo_Id } = useSelector((state: RootState) => state.Modal);
+    // const { open, type, id: Todo_Id } = props;
+    const { data: todo_arr } = useSelector((state: RootState) => state.Todo)
+    const dispatch = useAppDispatch();
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("")
     const [category, setCategory] = useState(CategoryEnum.LATELY)
-    const [todo_detail, setTodo_detail] = useState({} as Todo | undefined)
 
-    if (!props.open) return null
+    useEffect(() => {
+        if (type === modalType.DETAIL_TASK) {
+            const tmp = get_detail(todo_arr, Todo_Id!)
+            if (tmp) {
+                setContent(tmp.content);
+                setTitle(tmp.title);
+                setCategory(tmp.category)
+            } else {
+                dispatch(close_modal())
+            }
+        } else {
+            setContent("");
+            setTitle("");
+            setCategory(CategoryEnum.LATELY)
+        }
+    }, [open, type, Todo_Id])
 
-    // if (props.type === modalType.DETAIL_TASK) {
-    //     if (props.id === undefined){
-    //         dispatch(close_modal())
-    //         return null;
-    //     }
-    //     setTodo_detail(get_detail(Todo_array, props.id ? props.id : "")) 
-    //     // if (todo_detail != undefined) {
-    //     //     setTitle(todo_detail.title);
-    //     //     setContent(todo_detail.content);
-    //     //     setCategory(todo_detail.category);
-    //     // } else {
-    //     //     alert("Not found Task!!!");
-    //     //     dispatch(close_modal());
-    //     // }
-    //     console.log(todo_detail)
-    // }
-   
 
-    const handleAddTask = () => {
+    if (!open) return null
+
+    const handleSubmit = async () => {
+        switch (type) {
+            case modalType.CREATE_TASK:
+                await handleAddTask();
+                break;
+            case modalType.DETAIL_TASK:
+                await handleUpdatetask();
+                break;
+        }
+    }
+    const handleAddTask = async () => {
         //validate
         if (title.length === 0) {
             alert("Please add title!!!");
@@ -46,21 +59,45 @@ const Modal = (props: ModalProps) => {
             setContent(title);
         }
 
-        setTodo_detail ({
-            id: uuidv4(),
+        const Todo_detail = {
             title: title,
             content: content,
-            status: TodoStatus.ACTIVE,
-            category: category,
-            date_created: (new Date()).toLocaleDateString()
-        })
-        if(todo_detail !== undefined)
-            dispatch(add_todo(todo_detail))
+            category: category
+        } as Optional<Todo>;
+        // #TODO: check and config to call async thunk function
+        dispatch(addTodoAsync(Todo_detail) as unknown as AnyAction)
+
         //clear
         setTitle("");
         setContent("");
         setCategory(CategoryEnum.LATELY)
-        setTodo_detail(undefined)
+        //after add task => close modal
+        dispatch(close_modal())
+    }
+    const handleUpdatetask = async () => {
+        //validate
+        if (title.length === 0) {
+            alert("Please add title!!!");
+            return;
+        }
+
+        if (content.length === 0) {
+            setContent(title);
+        }
+
+        const Todo_detail = {
+            id: Todo_Id,
+            title: title,
+            content: content,
+            category: category
+        } as Optional<Todo>;
+        // #TODO: check and config to call async thunk function
+        dispatch(updateTodoAsync(Todo_detail) as unknown as AnyAction)
+
+        //clear
+        setTitle("");
+        setContent("");
+        setCategory(CategoryEnum.LATELY)
         //after add task => close modal
         dispatch(close_modal())
     }
@@ -93,7 +130,7 @@ const Modal = (props: ModalProps) => {
                             <button className='btn-lately' onClick={() => setCategory(CategoryEnum.LATELY)}>Lately</button>
                         </div>
                     </div>
-                    <button className='btn-create-task' onClick={() => handleAddTask()}>Submit Task</button>
+                    <button className='btn-create-task' onClick={() => handleSubmit()}>{type === modalType.CREATE_TASK ? "Add" : "Update"} Task</button>
                 </div>
             </div>
         </div>

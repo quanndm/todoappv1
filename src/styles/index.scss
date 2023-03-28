@@ -224,36 +224,46 @@ section.main-layout {
                             color: #fff;
                             text-align: left;
                         }
-
-                        .custom-checkbox {
-                            width: 25px;
-                            height: 25px;
-                            cursor: pointer;
-                            display: block;
-
-                            .check-mark {
-                                width: 100%;
-                                height: 100%;
-
-                                // border: 1px solid #fff;
-                                display: inline-block;
-
-                                border-radius: 50%;
-                                background: url("https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/White_check.svg/1200px-White_check.svg.png ") center/1250% no-repeat;
-                                transition: all .2s ease;
-                                background-color: #4caf50;
-                            }
-
-                            input {
-                                display: none;
-
-                                &:checked+.check-mark {
-                                    background-size: 60%;
+                        .check-status{
+                            display: flex;
+                            
+                            .custom-checkbox {
+                                width: 25px;
+                                height: 25px;
+                                cursor: pointer;
+                                display: block;
+    
+                                .check-mark {
+                                    width: 100%;
+                                    height: 100%;
+    
+                                    // border: 1px solid #fff;
+                                    display: inline-block;
+    
+                                    border-radius: 50%;
+                                    background: url("https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/White_check.svg/1200px-White_check.svg.png ") center/1250% no-repeat;
                                     transition: all .2s ease;
-
+                                    background-color: #4caf50;
+                                }
+    
+                                input {
+                                    display: none;
+    
+                                    &:checked+.check-mark {
+                                        background-size: 60%;
+                                        transition: all .2s ease;
+    
+                                    }
                                 }
                             }
+                            .delete-todo{
+                                width: 25px;
+                                height: 25px;
+                                margin-left: 10px;
+                                cursor: pointer;
+                            }
                         }
+                        
 
                     }
                 }
