@@ -21,6 +21,7 @@ export const ModalSlice = createSlice({
         close_modal: (state)=>{
             state.open = false;
             state.type = modalType.NOTHING;
+            state.id = undefined
         }
     }
 })

@@ -3,10 +3,7 @@ export enum modalType {
     CREATE_TASK = 1,
     DETAIL_TASK = 2
 }
-export enum TodoStatus{
-    FINISH = 1,
-    ACTIVE = 0
-}
+
 export enum CategoryEnum{
     URGEN = "URGEN",
     DELEGATE = "DELEGATE",
@@ -19,14 +16,19 @@ export enum Theme{
     NIGHT = 0
 }
 export interface Todo {
-    id: string,
+    id?: string,
     title: string,
     content : string,
-    status: TodoStatus,
+    isDone: boolean,
     category: CategoryEnum
     date_created: string
 }
-export type TodoState = Todo[];
+export type TodoState = {
+    data : Todo[],
+    status: "success" | "error" | "nothing" | "loading",
+    error?: string,
+    todo?: Todo
+};
 
 export type ModalProps = {
     open: boolean,
